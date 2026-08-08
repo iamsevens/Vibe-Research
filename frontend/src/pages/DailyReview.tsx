@@ -86,18 +86,26 @@ export function DailyReview() {
     ? indices.map((i) => `${i.name} ${i.price}（${i.change_pct > 0 ? "+" : ""}${i.change_pct}%）`).join("；")
     : "（指数数据未取到）";
 
+  // 自选股行情：有则拼进 AI 复盘输入，让复盘顺带对照你的关注列表逐只点评
+  const watchEntries = Object.entries(watchQuotes);
+  const watchSummary = watchEntries.length
+    ? watchEntries.map(([code, q]) => `${code} ${q.name} ${q.price}（${q.change_pct > 0 ? "+" : ""}${q.change_pct}%）`).join("；")
+    : "";
+
   const runReview = async () => {
     setReviewErr(null);
     setNeedConfig(false);
     if (!hasLlm()) { setNeedConfig(true); return; }
     setReviewLoading(true);
     setReview("");
+    const watchSection = watchSummary ? `\n\n以下是你的自选股实时行情：\n${watchSummary}` : "";
     const prompt =
-      `以下是今天 A 股大盘的客观数据：\n${dataSummary}\n\n` +
-      "请用中文做一段当天大盘复盘：整体涨跌、主要指数表现、盘面值得注意的点。" +
+      `以下是今天 A 股大盘的客观数据：\n${dataSummary}${watchSection}\n\n` +
+      "请用中文做一段当天复盘：先讲大盘整体涨跌、主要指数表现、盘面值得注意的点；" +
+      "如有自选股数据，再逐只点评其当日客观表现（涨跌、量能等）。" +
       "只做客观陈述与多视角分析，不预测涨跌、不推荐任何标的、不构成投资建议。";
     try {
-      await chatStream([{ role: "user", content: prompt }], `今日大盘数据：${dataSummary}`, {
+      await chatStream([{ role: "user", content: prompt }], `今日大盘数据：${dataSummary}${watchSection}`, {
         onDelta: (t) => setReview((r) => r + t),
       });
     } catch (e) {
