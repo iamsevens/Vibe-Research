@@ -6,10 +6,12 @@ import astock
 
 def test_get_prefix():
     assert astock.get_prefix("600519") == "sh"
-    assert astock.get_prefix("900001") == "sh"   # 9 开头也是沪
+    assert astock.get_prefix("900001") == "sh"   # 9 开头也是沪（900xxx B 股）
     assert astock.get_prefix("000001") == "sz"
     assert astock.get_prefix("300750") == "sz"
-    assert astock.get_prefix("832000") == "bj"   # 8 开头北交所
+    assert astock.get_prefix("920002") == "bj"   # 92 开头北交所（2024 起唯一北交所代码段）
+    assert astock.get_prefix("832000") == "sz"   # 8 开头旧新三板代码已不再作北交所
+    assert astock.get_prefix("430047") == "sz"   # 4 开头旧新三板代码已不再作北交所
     assert astock.get_prefix("510300") == "sh"   # 沪 ETF（issue #10：曾误判 sz → 行情为 0）
     assert astock.get_prefix("588000") == "sh"   # 科创 50 ETF
     assert astock.get_prefix("159915") == "sz"   # 深 ETF 15 开头走默认 sz

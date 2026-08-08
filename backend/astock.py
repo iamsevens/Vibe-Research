@@ -24,11 +24,15 @@ UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
 
 
 def get_prefix(code: str) -> str:
-    """6 位代码 → 交易所前缀。5 开头是沪市基金/ETF（51/56/58 等），深市基金 15/16 开头走默认 sz。"""
+    """6 位代码 → 交易所前缀。
+    沪：6(主板/科创)、9(沪市 900xxx B 股)、5(基金/ETF，51/56/58 等)；
+    深：0/3 及 1/2(基金/B 股) 走默认 sz；
+    北交所：仅 92(2024 起新代码段)——4/8 开头的旧新三板代码已不再作北交所用，按默认 sz 处理。
+    """
+    if code.startswith("92"):
+        return "bj"          # 北交所（920xxx）
     if code.startswith(("6", "9", "5")):
         return "sh"
-    if code.startswith("8"):
-        return "bj"
     return "sz"
 
 
