@@ -21,7 +21,7 @@
       "verified": true,
       "nodes": ["AI芯片", "光模块", "CPO光互连", "HBM存储", "先进封装", "PCB", "液冷散热"]
     },
-    { "key": "hbm", "label": "HBM", "tagline": "高带宽存储——AI 芯片的内存瓶颈", "hot": true, "verified": false, "nodes": [] },
+    { "key": "hbm", "label": "HBM", "tagline": "高带宽存储——AI 芯片的内存瓶颈", "hot": true, "verified": false, "nodes": ["DRAM 晶圆制造", "TSV 硅通孔制程", "晶圆减薄", "混合键合/微凸块", "基底芯片(Base Die)", "硅中介层/封装基板", "测试与老化"] },
     { "key": "cpo", "label": "光互联", "tagline": "光电共封装（CPO）——突破铜互连的带宽墙", "hot": true, "verified": false, "nodes": [] },
     { "key": "semiconductor", "label": "半导体国产替代", "tagline": "设备、材料、EDA、制造的自主链条", "hot": true, "verified": false, "nodes": ["光刻设备", "刻蚀设备", "薄膜沉积设备", "清洗/离子注入设备", "量测检测设备", "光刻胶/电子特气", "硅片/靶材/CMP材料", "EDA 与 IP", "晶圆代工", "先进封测"] },
     { "key": "solid-state-battery", "label": "固态电池", "tagline": "下一代电池的材料与工艺路线", "hot": true, "verified": false, "nodes": [] },
