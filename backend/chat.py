@@ -127,7 +127,8 @@ def _call_llm(cfg: dict, messages: list, use_tools: bool) -> dict:
         payload["tool_choice"] = "auto"
     r = requests.post(
         f"{base}/chat/completions",
-        headers={"Authorization": f"Bearer {cfg['apiKey']}", "Content-Type": "application/json"},
+        headers={"Authorization": f"Bearer {cfg['apiKey']}", "Content-Type": "application/json",
+                 "User-Agent": astock.UA},
         json=payload,
         timeout=90,
     )
@@ -208,7 +209,8 @@ def _call_llm_stream(cfg: dict, messages: list, use_tools: bool):
         payload["tool_choice"] = "auto"
     r = requests.post(
         f"{_resolve_base(cfg)}/chat/completions",
-        headers={"Authorization": f"Bearer {cfg['apiKey']}", "Content-Type": "application/json"},
+        headers={"Authorization": f"Bearer {cfg['apiKey']}", "Content-Type": "application/json",
+                 "User-Agent": astock.UA},
         json=payload, timeout=120, stream=True,
     )
     if r.status_code != 200:
